@@ -98,7 +98,7 @@ class Productview extends React.Component {
                                             <Button variant="contained" color="secondary" href={`/writeblog/${e._id.$oid}`}>Write a blog</Button>
                                         </div> :
                                         <div className='mx-3 my-3 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-                                            <Button variant="contained" color="primary" href={`/order/${e._id.$oid}`}>Order</Button>
+                                            <Button variant="contained" color="primary" href={`/order/${e._id.$oid}`}>buy</Button>
                                         </div>}
                                 </div>
                                 <div className='col-1'></div>

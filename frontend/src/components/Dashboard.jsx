@@ -13,7 +13,8 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userDataArr: []
+            userDataArr: [],
+            status: false
         }
     }
 
@@ -31,9 +32,12 @@ class Dashboard extends React.Component {
         })
             .then(res => {
                 console.log(res.data)
-                this.setState({
-                    userDataArr: res.data
-                })
+                if (res.data.length !== 0) {
+                    this.setState({
+                        userDataArr: res.data,
+                        status: true
+                    })
+                }
             })
             .catch(() => console.log('error'))
     }
@@ -48,37 +52,40 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { userDataArr } = this.state
+        const { userDataArr,status } = this.state
         return (
             <div>
                 <Navbar />
-                {userDataArr.map(e => {
-                    return (
-                        <div className='card my-3 container shadow' key={e._id.$oid}>
-                            <div className='row'>
-                                <div className='col-lg-8 col-md-12 col-sm-6 mx-3 my-3'>
-                                    <h4 className='text-muted' style={{ fontFamily: 'Proza Libre' }}>{e.productName}</h4>
-                                    <div>
-                                        <p className='my-3' style={{ fontFamily: 'Open Sans', color: '#aa614a' }} ><b>Category:</b> <span style={{ color: 'black' }}>{e.productType}</span></p>
-                                        <p className='my-3' style={{ fontFamily: 'Open Sans' }} >Rs. {e.productPrice}</p>
+                {status ?
+                    <div>
+                        {userDataArr.map(e => {
+                            return (
+                                <div className='card my-3 container shadow' key={e._id.$oid}>
+                                    <div className='row'>
+                                        <div className='col-lg-8 col-md-12 col-sm-6 mx-3 my-3'>
+                                            <h4 className='text-muted' style={{ fontFamily: 'Proza Libre' }}>{e.productName}</h4>
+                                            <div>
+                                                <p className='my-3' style={{ fontFamily: 'Open Sans', color: '#aa614a' }} ><b>Category:</b> <span style={{ color: 'black' }}>{e.productType}</span></p>
+                                                <p className='my-3' style={{ fontFamily: 'Open Sans' }} >Rs. {e.productPrice}</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-lg-3 col-md-6 col-sm-6'>
+                                            <img src={`http://127.0.0.1:5000/${e.imgLocation}`} className="img-fluid my-3" style={{ borderRadius: 10 }} alt='Pic' />
+                                        </div>
+                                        <div className='row'>
+                                            <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 my-2'>
+                                                <Button variant="contained" color="primary" href={`/update/${e._id.$oid}`}>Update</Button>
+                                            </div>
+                                            <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 my-2'>
+                                                <Button variant="contained" color="secondary" onClick={() => this.handleDelete(e._id.$oid)}>Delete</Button>
+                                            </div>
+                                        </div>
+                                        <div className='col-1'></div>
                                     </div>
                                 </div>
-                                <div className='col-lg-3 col-md-6 col-sm-6'>
-                                    <img src={`http://127.0.0.1:5000/${e.imgLocation}`} className="img-fluid my-3" style={{ borderRadius: 10 }} alt='Pic' />
-                                </div>
-                                <div className='row'>
-                                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 my-2'>
-                                        <Button variant="contained" color="primary" href={`/update/${e._id.$oid}`}>Update</Button>
-                                    </div>
-                                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 my-2'>
-                                        <Button variant="contained" color="secondary" onClick={() => this.handleDelete(e._id.$oid)}>Delete</Button>
-                                    </div>
-                                </div>
-                                <div className='col-1'></div>
-                            </div>
-                        </div>
-                    )
-                })}
+                            )
+                        })}
+                    </div> : <h1 className='container text-center'>You have't posted yet</h1>}
 
 
             </div>

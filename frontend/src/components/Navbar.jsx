@@ -42,7 +42,7 @@ class Navbar extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" style={{ flexGrow: 1 }}>
-                            News
+                            Home
                         </Typography>
                         {status ?
                             <Button color="inherit" onClick={this.handleLogout}>Logout</Button> : null}
