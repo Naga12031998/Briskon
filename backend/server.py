@@ -7,7 +7,6 @@ from flask import request, make_response, jsonify
 
 import json
 import hashlib
-import os
 import jwt
 import datetime
 
