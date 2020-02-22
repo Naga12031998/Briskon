@@ -24,7 +24,7 @@ def register():
     passwordHash = md5_hash(passwordHash)
 
     checkEmail = mongo.db.users.find({'email' : email}).count()
-    checkUserName = mongodb.users.find({'userName' : userName}).count()
+    checkUserName = mongo.db.users.find({'userName' : userName}).count()
     # print(checkEmail)
 
     if checkEmail == 0 and checkUserName == 0:
